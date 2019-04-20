@@ -3,19 +3,19 @@ import bmesh
 from mathutils import Vector
 
 # TODO UI for these settings (at least).
-buttons = 7
+# if buttons is non zero then the script will only sew a set of 'run' edges every 'buttons' vertices.
+# so with buttons=7, run=2 you get 2 sewn edges, 5 gaps, 2 sewn edges, 5 gaps etc.
+# whether that pattern will start from one end of the seam or the other is random.
+buttons = 0
 run = 2
 
 ###
-# start script with pattern mesh in edit mode and one or more vertices, edges and polygons selected on each edge to be sewn.
-# script follows the edges, (TODO puts them in the sew group) and adds edges to sew them.
+# start script with pattern mesh in edit mode and one or more vertices, (TODO edges and polygons) selected on each edge to be sewn.
+# script follows the edges and adds edges to sew them.
 ###
 
 mesh = bpy.context.object.data
 bm = bmesh.from_edit_mesh(mesh)
-groups = bpy.context.object.vertex_groups
-
-# TODO make sure the "sew" vertex group exists.
 
 # for now you must select one vertex on each edge you want to sew .. and not on a corner!
 vert_pair = [v for v in bm.verts if v.select]
@@ -120,7 +120,6 @@ if (b - a).length > (c - a).length:
     sewing_lines[1].reverse()
 
 # TODO skip existing edges.
-# TODO make sure all the verts are in the "sew" vertex group.
 for n, (a, b) in enumerate(zip(*sewing_lines)):
     if buttons and n % buttons >= run:
         continue
