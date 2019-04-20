@@ -8,6 +8,7 @@ from mathutils import Vector
 # whether that pattern will start from one end of the seam or the other is random.
 buttons = 0
 run = 2
+sharpness = 0.7  # 1 means "edges must be exactly straight lines", 0 means "keep going until you reach a right-angle".
 
 ###
 # start script with pattern mesh in edit mode and one or more vertices, (TODO edges and polygons) selected on each edge to be sewn.
@@ -86,7 +87,7 @@ while outer_edges:
         i = (b - a).normalized()
         j = (d - c).normalized()
         p = i.dot(j)  # TODO try BMVert.calc_edge_angle()
-        if p > -0.7:  # sharp corner!
+        if p > -sharpness:  # sharp corner!
             if end == head:
                 head_finished = True
             else:
