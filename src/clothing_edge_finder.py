@@ -119,7 +119,6 @@ c = sewing_lines[1][-1].co
 if (b - a).length > (c - a).length:
     sewing_lines[1].reverse()
 
-# TODO skip existing edges.
 for n, (a, b) in enumerate(zip(*sewing_lines)):
     if buttons and n % buttons >= run:
         continue
